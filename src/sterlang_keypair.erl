@@ -1,5 +1,7 @@
 -module(sterlang_keypair).
 
+-export([random/0, from_seed/1, make_keypair/1]).
+
 -record(keypair, {seed, private_key, public_key}).
 
 random() ->
@@ -7,12 +9,14 @@ random() ->
   Seed = sterlang_keygen:seed_from_bytes(Bytes),
   make_keypair(Seed).
 
-random(Bytes) when is_binary and (byte_size(Bytes) =:= 32) ->
+from_seed(Bytes) when is_binary(Bytes) and (byte_size(Bytes) =:= 32) ->
   Seed = sterlang_keygen:seed_from_bytes(Bytes),
   make_keypair(Seed).
 
 make_keypair(Seed) when is_binary(Seed) ->
   PrivateKey = sterlang_keygen:bytes_from_base32_seed(Seed),
+  PublicKey = sterlang_keygen:address_from_bytes(PrivateKey),
 
   #keypair{seed = Seed,
-          private_key = PrivateKey}.
+          private_key = PrivateKey,
+          public_key = PublicKey}.

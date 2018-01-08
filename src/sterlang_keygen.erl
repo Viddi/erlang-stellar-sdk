@@ -1,6 +1,6 @@
 -module(sterlang_keygen).
 
--export([seed_from_bytes/1]).
+-export([seed_from_bytes/1, bytes_from_base32_seed/1, address_from_bytes/1]).
 
 %%====================================================================
 %% API functions
@@ -12,10 +12,10 @@ seed_from_bytes(Payload) when is_binary(Payload) and (byte_size(Payload) =:= 32)
 
 bytes_from_base32_seed(Base32Seed) when is_binary(Base32Seed) ->
   Decoded = base32:decode(Base32Seed),
-  <<Version:8, Payload:256, Checksum:16>> = Decoded,
+  <<Version:8, Payload:32/binary, Checksum:2/binary>> = Decoded,
 
   ExpectedVersion = byte_seed(),
-  ExpectedChecksum = checksum(<<Version, Payload>>),
+  ExpectedChecksum = checksum(<<Version, Payload/binary>>),
 
   if
     Version =/= ExpectedVersion ->
@@ -26,6 +26,10 @@ bytes_from_base32_seed(Base32Seed) when is_binary(Base32Seed) ->
       Payload
   end.
 
+address_from_bytes(Payload) when is_binary(Payload) ->
+  Version = byte_account_id(),
+  Checksum = checksum(<<Version, Payload/binary>>),
+  base32:encode(<<Version, Payload/binary, Checksum/binary>>).
 
 %%====================================================================
 %% Internal functions
@@ -44,4 +48,4 @@ byte_sha256_hash() ->
 
 checksum(Binary) when is_binary(Binary) ->
   BinList = binary_to_list(Binary),
-  binary:encode_unsigned(sterlang_crc16:ccitt(BinList)).
+  binary:encode_unsigned(sterlang_crc16:ccitt(BinList), little).
