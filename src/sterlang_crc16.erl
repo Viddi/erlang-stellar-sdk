@@ -7,7 +7,7 @@
 -define(POLYNOMIAL, 16#1021). % for left-shifts
 
 % ITU CRC16 CCITT Initial Value
--define(INITIAL_VALUE, 16#FFFF).
+-define(INITIAL_VALUE, 16#0000).
 
 % ITU CRC16 CCITT Look-up Table (LUT) based on left-shifts
 -define(CRC16LUT,

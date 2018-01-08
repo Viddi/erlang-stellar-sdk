@@ -6,10 +6,8 @@
 %%====================================================================
 %% API functions
 %%====================================================================
-create_account(PublicKey) ->
-  {ok, Encoded} = berl32:encode(PublicKey),
-  EncodedStr = binary:bin_to_list(Encoded),
-  handle_http_call(get, horizon_account_url(EncodedStr)).
+create_account(AccountId) ->
+  handle_http_call(get, horizon_account_url(AccountId)).
 
 %%====================================================================
 %% Internal functions

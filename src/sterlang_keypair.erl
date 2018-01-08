@@ -2,7 +2,7 @@
 
 -export([random/0, from_seed/1, make_keypair/1]).
 
--record(keypair, {seed, private_key, public_key}).
+-record(key_pair, {seed, private_key, public_key}).
 
 random() ->
   Bytes = crypto:strong_rand_bytes(32),
@@ -17,6 +17,6 @@ make_keypair(Seed) when is_binary(Seed) ->
   PrivateKey = sterlang_keygen:bytes_from_base32_seed(Seed),
   PublicKey = sterlang_keygen:address_from_bytes(PrivateKey),
 
-  #keypair{seed = Seed,
+  #key_pair{seed = Seed,
           private_key = PrivateKey,
-          public_key = PublicKey}.
+          public_key = binary_to_list(PublicKey)}.
