@@ -1,0 +1,20 @@
+{"1.1.0",
+[{<<"base32">>,
+  {git,"git@github.com:aetrion/base32_erlang.git",
+       {ref,"40431a7480176b24863e18b92d9872e54c714df5"}},
+  0},
+ {<<"base64url">>,{pkg,<<"base64url">>,<<"0.0.1">>},1},
+ {<<"berl32">>,
+  {git,"git@github.com:niamtokik/berl32.git",
+       {ref,"aa6a20f17b9a115877ea709e1144969dc75b3379"}},
+  0},
+ {<<"jose">>,{pkg,<<"jose">>,<<"1.8.4">>},0},
+ {<<"libsodium">>,
+  {git,"git@github.com:aadavids/erlang-libsodium.git",
+       {ref,"b493549739e4e27ba6723b68c9278075b77a44e2"}},
+  0}]}.
+[
+{pkg_hash,[
+ {<<"base64url">>, <<"36A90125F5948E3AFD7BE97662A1504B934DD5DAC78451CA6E9ABF85A10286BE">>},
+ {<<"jose">>, <<"7946D1E5C03A76AC9EF42A6E6A20001D35987AFD68C2107BCD8F01A84E75AA73">>}]}
+].
