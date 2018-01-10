@@ -1,4 +1,4 @@
--module(sterlang_keygen).
+-module(sterlang_key_gen).
 
 -export([seed_from_bytes/1, bytes_from_base32_seed/1, address_from_bytes/1]).
 
