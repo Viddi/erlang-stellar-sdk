@@ -21,7 +21,7 @@ sterlang:create_account(PublicKey).
 ### TODO
 
 - [ ] Add CI.
-- [ ] Add `spec`s for all functions.
+- [X] Add `spec`s for all functions.
 - [ ] Add documentation for all functions.
 - [ ] Add tests.
 - [ ] Add HTTP response records.

@@ -5,12 +5,14 @@
 %%====================================================================
 %% API functions
 %%====================================================================
-seed_from_bytes(Payload) when is_binary(Payload) and (byte_size(Payload) =:= 32) ->
+-spec seed_from_bytes(<<_:_*32>>) -> <<_:_*56>>.
+seed_from_bytes(<<Payload:32/binary>>) ->
   Version = byte_seed(),
   Checksum = checksum(<<Version, Payload/binary>>),
   base32:encode(<<Version, Payload/binary, Checksum/binary>>).
 
-bytes_from_base32_seed(Base32Seed) when is_binary(Base32Seed) ->
+-spec bytes_from_base32_seed(<<_:_*56>>) -> <<_:_*32>>.
+bytes_from_base32_seed(<<Base32Seed:56/binary>>) ->
   Decoded = base32:decode(Base32Seed),
   <<Version:8, Payload:32/binary, Checksum:2/binary>> = Decoded,
 
@@ -26,7 +28,8 @@ bytes_from_base32_seed(Base32Seed) when is_binary(Base32Seed) ->
       Payload
   end.
 
-address_from_bytes(Payload) when is_binary(Payload) ->
+-spec address_from_bytes(<<_:_*32>>) -> <<_:_*56>>.
+address_from_bytes(<<Payload:32/binary>>) ->
   Version = byte_account_id(),
   Checksum = checksum(<<Version, Payload/binary>>),
   base32:encode(<<Version, Payload/binary, Checksum/binary>>).
@@ -34,18 +37,23 @@ address_from_bytes(Payload) when is_binary(Payload) ->
 %%====================================================================
 %% Internal functions
 %%====================================================================
+-spec byte_account_id() -> 48.
 byte_account_id() ->
   6 bsl 3.
 
+-spec byte_seed() -> 144.
 byte_seed() ->
   18 bsl 3.
 
-byte_pre_auth_tx() ->
-  19 bsl 3.
+%% -spec byte_pre_auth_tx() -> 153.
+%% byte_pre_auth_tx() ->
+%%   19 bsl 3.
+%%
+%% -spec byte_sha256_hash() -> 184.
+%% byte_sha256_hash() ->
+%%   23 bsl 3.
 
-byte_sha256_hash() ->
-  23 bsl 3.
-
+-spec checksum(binary()) -> binary().
 checksum(Binary) when is_binary(Binary) ->
   BinList = binary_to_list(Binary),
   binary:encode_unsigned(sterlang_crc16:ccitt(BinList), little).

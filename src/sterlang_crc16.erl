@@ -1,6 +1,5 @@
 -module(sterlang_crc16).
 
--export([maketable/0]).
 -export([ccitt/1]).
 
 % ITU CRC16 CCITT Normalized Polynomial
@@ -47,31 +46,15 @@
 %%====================================================================
 %% API functions
 %%====================================================================
-maketable() -> outer_loop(0, 255, fun tablevalue/1).
+-spec ccitt(string()) -> integer().
 ccitt(Data) -> crc16(Data, ?INITIAL_VALUE).
 
 %%====================================================================
 %% Internal functions
 %%====================================================================
-inner_loop(0, X, _) -> X;
-inner_loop(N, X, F) -> inner_loop(N-1, F(X), F).
-
-outer_loop(Max, Max, F) -> [F(Max)];
-outer_loop(I, Max, F)   -> [F(I)|outer_loop(I+1, Max, F)].
-
-calculate(X) when X =< 255 ->
-  Reg = X bsl 8,
-  inner_loop(8, Reg, fun(Y) ->
-                         if Y band 16#8000 /= 16#0000 -> ?POLYNOMIAL bxor (Y bsl 1);
-                            Y band 16#8000 == 16#0000 -> Y bsl 1
-                         end
-                     end).
-
-tablevalue(X) ->
-  calculate(X) band 16#FFFF.
-
+-spec crc16(list(), integer()) -> integer().
 crc16([], Acc) -> Acc;
-crc16([Byte|TheRest], Acc) when Byte =< 16#FF ->
+crc16([Byte | TheRest], Acc) when Byte =< 16#FF ->
   TableIndex = (Acc bsr 8) bxor Byte,
   UpdatedAcc = ((Acc bsl 8) bxor lists:nth(TableIndex+1, ?CRC16LUT)) band 16#FFFF,
   crc16(TheRest, UpdatedAcc).
