@@ -5,12 +5,18 @@
 %%====================================================================
 %% API functions
 %%====================================================================
+
+%% @doc Generates a 56 byte Base32 encoded binary from the given seed.
 -spec seed_from_bytes(<<_:_*32>>) -> <<_:_*56>>.
 seed_from_bytes(<<Payload:32/binary>>) ->
   Version = byte_seed(),
   Checksum = checksum(<<Version, Payload/binary>>),
   base32:encode(<<Version, Payload/binary, Checksum/binary>>).
 
+%% @doc Retrieves the 'payload', or the 'raw bytes' that were used to generate
+%% the given secret binary. Both the version byte and the checksum bytes are
+%% verified if they are correct. If they are, then the 32 byte seed that was
+%% used to generate the secret key is returned.
 -spec bytes_from_base32_seed(<<_:_*56>>) -> <<_:_*32>>.
 bytes_from_base32_seed(<<Base32Seed:56/binary>>) ->
   Decoded = base32:decode(Base32Seed),
@@ -28,6 +34,8 @@ bytes_from_base32_seed(<<Base32Seed:56/binary>>) ->
       Payload
   end.
 
+%% @doc Generates and returns the 'address' or the 'public key' based
+%% on the given 32 binary seed.
 -spec address_from_bytes(<<_:_*32>>) -> <<_:_*56>>.
 address_from_bytes(<<Payload:32/binary>>) ->
   Version = byte_account_id(),

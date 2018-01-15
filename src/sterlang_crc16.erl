@@ -46,6 +46,8 @@
 %%====================================================================
 %% API functions
 %%====================================================================
+
+%% @doc Prints out the 16 bit Cyclic redundancy check (CRC-CCITT 16#0000).
 -spec ccitt(string()) -> integer().
 ccitt(Data) -> crc16(Data, ?INITIAL_VALUE).
 

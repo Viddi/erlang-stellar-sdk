@@ -8,10 +8,13 @@
 %%====================================================================
 %% API functions
 %%====================================================================
+
+%% @doc Makes an HTTP request to create an account with the given public key.
 -spec create_account(string()) -> http_response().
 create_account(AccountId) ->
   handle_http_call(get, horizon_create_account_url(AccountId)).
 
+%% @doc Retrieves details about the ggiven account.
 -spec account_details(string()) -> http_response().
 account_details(AccountId) ->
   handle_http_call(get, horizon_account_details_url(AccountId)).

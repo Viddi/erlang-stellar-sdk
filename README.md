@@ -22,7 +22,7 @@ sterlang:create_account(PublicKey).
 
 - [ ] Add CI.
 - [X] Add `spec`s for all functions.
-- [ ] Add documentation for all functions.
+- [X] Add documentation for all functions.
 - [ ] Add tests.
 - [ ] Add HTTP response records.
 - [ ] Send/Receive payments.
