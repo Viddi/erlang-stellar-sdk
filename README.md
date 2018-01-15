@@ -23,7 +23,7 @@ sterlang:create_account(PublicKey).
 - [ ] Add CI.
 - [X] Add `spec`s for all functions.
 - [X] Add documentation for all functions.
-- [ ] Add tests.
+- [X] Add tests.
 - [ ] Add HTTP response records.
 - [ ] Send/Receive payments.
 - [ ] Better Elixir interop.
