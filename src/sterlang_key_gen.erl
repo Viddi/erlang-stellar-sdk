@@ -27,7 +27,7 @@ bytes_from_base32_seed(<<Base32Seed:56/binary>>) ->
 
   if
     Version =/= ExpectedVersion ->
-      throw(invalid_seed);
+      throw(invalid_version_byte);
     Checksum =/= ExpectedChecksum ->
       throw(invalid_checksum);
     true ->
