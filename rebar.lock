@@ -1,6 +1,6 @@
 {"1.1.0",
 [{<<"base32">>,
-  {git,"git@github.com:aetrion/base32_erlang.git",
+  {git,"https://github.com/aetrion/base32_erlang.git",
        {ref,"40431a7480176b24863e18b92d9872e54c714df5"}},
   0},
  {<<"base64url">>,{pkg,<<"base64url">>,<<"0.0.1">>},1},
