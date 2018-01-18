@@ -20,3 +20,4 @@ install:
 
 script:
   - rebar3 dialyzer
+  - rebar3 eunit
