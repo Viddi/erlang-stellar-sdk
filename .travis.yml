@@ -4,3 +4,7 @@ opt_release:
   - 20.2
   - 20.1
   - 20.0
+
+script:
+  - rebar3 dialyzer
+  - rebar3 eunit
