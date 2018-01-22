@@ -30,3 +30,15 @@ public_key_test() ->
   ?assertEqual(56, string:length(PublicKey)),
   ?assertEqual(56, byte_size(PublicKeyBinary)),
   ?assertMatch(<<"G", _/binary>>, PublicKeyBinary).
+
+key_equality_test() ->
+  KeyPair = sterlang_key_pair:random(),
+
+  Secret = sterlang_key_pair:secret(KeyPair),
+  PublicKey = sterlang_key_pair:public_key(KeyPair),
+
+  %% Make sure the payload is not the same in the secret and the public key.
+  <<"S", SecretPayload:32/binary, _/binary>> = Secret,
+  <<"G", PublicPayload:32/binary, _/binary>> = list_to_binary(PublicKey),
+
+  ?assertNotEqual(SecretPayload, PublicPayload).

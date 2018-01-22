@@ -39,8 +39,9 @@ bytes_from_base32_seed(<<Base32Seed:56/binary>>) ->
 -spec address_from_bytes(<<_:_*32>>) -> <<_:_*56>>.
 address_from_bytes(<<Payload:32/binary>>) ->
   Version = byte_account_id(),
-  Checksum = checksum(<<Version, Payload/binary>>),
-  base32:encode(<<Version, Payload/binary, Checksum/binary>>).
+  Ed25519Payload = jose_jwa_ed25519:secret_to_pk(Payload),
+  Checksum = checksum(<<Version, Ed25519Payload/binary>>),
+  base32:encode(<<Version, Ed25519Payload/binary, Checksum/binary>>).
 
 %%====================================================================
 %% Internal functions

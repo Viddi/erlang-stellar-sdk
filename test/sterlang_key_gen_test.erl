@@ -39,7 +39,10 @@ address_from_bytes_test() ->
   Address = sterlang_key_gen:address_from_bytes(Bytes),
 
   ?assertEqual(56, byte_size(Address)),
-  ?assertMatch(<<"G", _/binary>>, Address).
+  ?assertMatch(<<"G", _/binary>>, Address),
+
+  <<"G", Payload:32/binary, _/binary>> = Address,
+  ?assertNotEqual(Payload, Bytes).
 
 random_bytes() ->
   crypto:strong_rand_bytes(32).
