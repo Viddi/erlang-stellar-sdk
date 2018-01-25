@@ -1,40 +1,62 @@
 -module(sterlang).
 
--export([create_account/1, account_details/1]).
-
-%% TODO: Remove this type in favor of response records.
--type http_response() :: {ok, term()} | {ok, saved_to_file} | {error, term()}.
+-export([connect/0, close/1, create_account/2]).
 
 %%====================================================================
 %% API functions
 %%====================================================================
 
-%% @doc Makes an HTTP request to create an account with the given public key.
--spec create_account(string()) -> http_response().
-create_account(AccountId) ->
-  handle_http_call(get, horizon_create_account_url(AccountId)).
+%% @doc Opens a connection to the horizon base url endpoint.
+-spec connect() -> {ok, pid()} | {error, any()}.
+connect() ->
+  gun:open("horizon-testnet.stellar.org", 443).
 
-%% @doc Retrieves details about the ggiven account.
--spec account_details(string()) -> http_response().
-account_details(AccountId) ->
-  handle_http_call(get, horizon_account_details_url(AccountId)).
+%% @doc Closes the connection for the given Pid.
+-spec close(pid()) -> ok.
+close(Pid) ->
+  gun:shutdown(Pid).
+
+%% @doc Makes a request to create an account for the given account id.
+-spec create_account(pid(), <<_:_*56>>) -> atom().
+create_account(Pid, PublicKey) ->
+  Url = horizon_create_account_url(PublicKey),
+  Ref = gun:get(Pid, Url),
+  receive_response(Pid, Ref).
 
 %%====================================================================
 %% Internal functions
 %%====================================================================
--spec horizon_base_url() -> string().
-horizon_base_url() ->
-  "https://horizon-testnet.stellar.org".
+-spec horizon_create_account_url(binary()) -> [byte(), ...].
+horizon_create_account_url(PublicKey) ->
+  "/friendbot?addr=" ++ binary_to_list(PublicKey).
 
--spec horizon_create_account_url(string()) -> string().
-horizon_create_account_url(Addr) ->
-  horizon_base_url() ++ "/friendbot?addr=" ++ Addr.
+%% -spec horizon_account_details_url(string()) -> string().
+%% horizon_account_details_url(PublicKey) ->
+%%   "/accounts/" ++ binary_to_list(PublicKey).
 
--spec horizon_account_details_url(string()) -> string().
-horizon_account_details_url(Addr) ->
-  horizon_base_url() ++ "/accounts/" ++ Addr.
+receive_response(ConnPid, Ref) ->
+  receive
+    {gun_response, ConnPid, Ref, fin, _Status, _Headers} ->
+      no_data;
+    {gun_response, ConnPid, Ref, nofin, _Status, _Headers} ->
+      receive_data(ConnPid, Ref);
+    {'DOWN', _, process, ConnPid, Reason} ->
+      error_logger:error_msg("Oops!"),
+      exit(Reason)
+  after 10000 ->
+    exit(timeout)
+  end.
 
--spec handle_http_call(atom(), string()) -> http_response().
-handle_http_call(Method, Url) ->
-  inets:start(),
-  httpc:request(Method, {Url, []}, [], []).
+receive_data(ConnPid, Ref) ->
+  receive
+    {gun_data, ConnPid, Ref, nofin, Data} ->
+      io:format("~s~n", [Data]),
+      receive_data(ConnPid, Ref);
+    {gun_data, ConnPid, Ref, fin, Data} ->
+      io:format("~s~n", [Data]);
+    {'DOWN', _, process, ConnPid, Reason} ->
+      error_logger:error_msg("Oops!"),
+      exit(Reason)
+  after 10000 ->
+    exit(timeout)
+  end.
