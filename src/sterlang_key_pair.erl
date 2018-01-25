@@ -4,7 +4,7 @@
 
 -record(key_pair, {seed = undefined :: undefined | bitstring(),
                    private_key = undefined :: undefined | binary(),
-                   public_key = undefined :: undefined | string()}).
+                   public_key = undefined :: undefined | bitstring()}).
 
 -opaque key_pair() :: #key_pair{}.
 
@@ -44,7 +44,7 @@ private_key(#key_pair{private_key = PrivateKey}) ->
 
 %% @doc Retrieves the public key for the given key pair.
 %% This key is the same as an account id.
--spec public_key(key_pair()) -> list().
+-spec public_key(key_pair()) -> binary().
 public_key(#key_pair{public_key = PublicKey}) ->
   PublicKey.
 
@@ -58,4 +58,4 @@ make_key_pair(<<"S", _:55/binary>> = Seed) ->
 
   #key_pair{seed = Seed,
           private_key = PrivateKey,
-          public_key = binary_to_list(PublicKey)}.
+          public_key = PublicKey}.

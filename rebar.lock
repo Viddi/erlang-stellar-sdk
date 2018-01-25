@@ -4,9 +4,17 @@
        {ref,"40431a7480176b24863e18b92d9872e54c714df5"}},
   0},
  {<<"base64url">>,{pkg,<<"base64url">>,<<"0.0.1">>},1},
- {<<"jose">>,{pkg,<<"jose">>,<<"1.8.4">>},0}]}.
+ {<<"cowlib">>,{pkg,<<"cowlib">>,<<"2.1.0">>},1},
+ {<<"gun">>,{pkg,<<"gun">>,<<"1.0.0-pre.4b">>},0},
+ {<<"jiffy">>,{pkg,<<"jiffy">>,<<"0.15.0">>},0},
+ {<<"jose">>,{pkg,<<"jose">>,<<"1.8.4">>},0},
+ {<<"ranch">>,{pkg,<<"ranch">>,<<"1.4.0">>},1}]}.
 [
 {pkg_hash,[
  {<<"base64url">>, <<"36A90125F5948E3AFD7BE97662A1504B934DD5DAC78451CA6E9ABF85A10286BE">>},
- {<<"jose">>, <<"7946D1E5C03A76AC9EF42A6E6A20001D35987AFD68C2107BCD8F01A84E75AA73">>}]}
+ {<<"cowlib">>, <<"F73658B93DD043AF40400C3E4FD997068EBD0C617F8C8F4CD003A1A78EBF94F5">>},
+ {<<"gun">>, <<"DD53B9FD3D597CFA7974D6AD85128AC7E16A408D6DC8C392A532AA36EB032A5D">>},
+ {<<"jiffy">>, <<"C44B61EA7B5D81B5BBD95EA5922D7C5F915D5BF15500FD1372C1AA10404673A9">>},
+ {<<"jose">>, <<"7946D1E5C03A76AC9EF42A6E6A20001D35987AFD68C2107BCD8F01A84E75AA73">>},
+ {<<"ranch">>, <<"10272F95DA79340FA7E8774BA7930B901713D272905D0012B06CA6D994F8826B">>}]}
 ].
