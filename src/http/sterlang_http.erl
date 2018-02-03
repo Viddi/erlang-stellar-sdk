@@ -7,4 +7,3 @@
 -callback close(pid()) -> term().
 
 -callback get(pid(), Url :: string()) -> response().
-  

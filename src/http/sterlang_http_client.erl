@@ -24,6 +24,7 @@ get(Pid, Url) ->
 %%====================================================================
 %% Internal functions
 %%====================================================================
+-spec await_response(pid(), reference()) -> sterlang_http:response().
 await_response(Pid, Ref) ->
   case gun:await(Pid, Ref) of
     {response, fin, Status, Headers} ->
