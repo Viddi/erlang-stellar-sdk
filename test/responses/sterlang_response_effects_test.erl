@@ -3,15 +3,20 @@
 -include_lib("eunit/include/eunit.hrl").
 
 encode_test() ->
-  ok.
+  Effects = sterlang_response_effects:decode(effects_map()),
+  Encoded = sterlang_response_effects:encode(Effects),
+
+  Test =
+    <<"{\"templated\":true,\"href\":\"/operations/402494270214144/effects/{?cursor,limit,order}\"}">>,
+  ?assertEqual(Test, Encoded).
 
 decode_test() ->
-  Effect = sterlang_response_effects:decode(effect_map()),
+  Effects = sterlang_response_effects:decode(effects_map()),
 
   ?assertEqual(<<"/operations/402494270214144/effects/{?cursor,limit,order}">>,
-              sterlang_response_effects:href(Effect)),
-  ?assert(sterlang_response_effects:templated(Effect)).
+              sterlang_response_effects:href(Effects)),
+  ?assert(sterlang_response_effects:templated(Effects)).
 
-effect_map() ->
+effects_map() ->
   #{<<"href">> => <<"/operations/402494270214144/effects/{?cursor,limit,order}">>,
     <<"templated">> => true}.

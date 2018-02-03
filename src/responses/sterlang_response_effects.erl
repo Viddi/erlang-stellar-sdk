@@ -9,21 +9,22 @@
                        templated = undefined :: templated_type()}).
 
 -opaque response_effects() :: #response_effects{}.
--opaque href_type() :: undefined | bitstring().
--opaque templated_type() :: undefined | true | false.
+
+-type href_type() :: undefined | bitstring().
+-type templated_type() :: undefined | true | false.
 
 -export_type([response_effects/0]).
 
 -spec decode(map()) -> response_effects().
-decode(Effect) ->
-  Href = maps:get(<<"href">>, Effect),
-  Templated = maps:get(<<"templated">>, Effect),
+decode(Effects) ->
+  Href = maps:get(<<"href">>, Effects),
+  Templated = maps:get(<<"templated">>, Effects),
   
   #response_effects{href = Href, templated = Templated}.
 
 -spec encode(response_effects()) -> iodata().
-encode(#response_effects{} = Effect) ->
-  Map = #{<<"href">> => href(Effect), <<"templated">> => templated(Effect)},
+encode(#response_effects{} = Effects) ->
+  Map = #{<<"href">> => href(Effects), <<"templated">> => templated(Effects)},
   jiffy:encode(Map).
 
 -spec href(response_effects()) -> href_type().
