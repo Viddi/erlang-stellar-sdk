@@ -2,7 +2,7 @@
 
 -behaviour(sterlang_response).
 
--export([encode/1, decode/1]).
+-export([encode/1, decode/1, to_map/1]).
 -export([href/1]).
 
 -record(response_transactions, {href = undefined :: href_type()}).
@@ -20,8 +20,12 @@ decode(Transactions) ->
 
 -spec encode(response_transactions()) -> iodata().
 encode(#response_transactions{} = Transactions) ->
-  Map = #{<<"href">> => href(Transactions)},
+  Map = to_map(Transactions),
   jiffy:encode(Map).
+
+-spec to_map(response_transactions()) -> map().
+to_map(#response_transactions{} = Transactions) ->
+  #{<<"href">> => href(Transactions)}.
 
 -spec href(response_transactions()) -> href_type().
 href(#response_transactions{href = Href}) ->

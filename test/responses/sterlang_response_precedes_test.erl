@@ -15,5 +15,11 @@ decode_test() ->
   ?assertEqual(<<"/operations?cursor=402494270214144&order=asc">>,
                sterlang_response_precedes:href(Precedes)).
 
+to_map_test() ->
+  Precedes = sterlang_response_precedes:decode(precedes_map()),
+  Map = sterlang_response_precedes:to_map(Precedes),
+
+  ?assertEqual(precedes_map(), Map).
+
 precedes_map() ->
   #{<<"href">> => <<"/operations?cursor=402494270214144&order=asc">>}.

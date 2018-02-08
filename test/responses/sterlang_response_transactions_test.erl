@@ -15,5 +15,11 @@ decode_test() ->
   ?assertEqual(<<"/transactions/402494270214144">>,
                sterlang_response_transactions:href(Transactions)).
 
+to_map_test() ->
+  Transactions = sterlang_response_transactions:decode(transactions_map()),
+  Map = sterlang_response_transactions:to_map(Transactions),
+
+  ?assertEqual(transactions_map(), Map).
+
 transactions_map() ->
   #{<<"href">> => <<"/transactions/402494270214144">>}.

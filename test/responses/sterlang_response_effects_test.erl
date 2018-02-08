@@ -17,6 +17,12 @@ decode_test() ->
               sterlang_response_effects:href(Effects)),
   ?assert(sterlang_response_effects:templated(Effects)).
 
+to_map_test() ->
+  Effects = sterlang_response_effects:decode(effects_map()),
+  Map = sterlang_response_effects:to_map(Effects),
+
+  ?assertEqual(effects_map(), Map).
+
 effects_map() ->
   #{<<"href">> => <<"/operations/402494270214144/effects/{?cursor,limit,order}">>,
     <<"templated">> => true}.

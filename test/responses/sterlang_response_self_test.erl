@@ -14,5 +14,11 @@ decode_test() ->
 
   ?assertEqual(<<"/operations/402494270214144">>, sterlang_response_self:href(Self)).
 
+to_map_test() ->
+  Self = sterlang_response_self:decode(self_map()),
+  Map = sterlang_response_self:to_map(Self),
+
+  ?assertEqual(self_map(), Map).
+
 self_map() ->
   #{<<"href">> => <<"/operations/402494270214144">>}.
