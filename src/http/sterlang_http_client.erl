@@ -15,7 +15,6 @@ connect() ->
 close(Pid) ->
   gun:shutdown(Pid).
 
--spec get(pid(), string()) -> sterlang_http:response().
 get(Pid, Url) ->
   Ref = gun:get(Pid, Url),
   await_response(Pid, Ref).

@@ -6,7 +6,7 @@
 -export([href/1, templated/1]).
 
 -record(response_effects, {href = undefined :: href_type(),
-                       templated = undefined :: templated_type()}).
+                           templated = undefined :: templated_type()}).
 
 -opaque response_effects() :: #response_effects{}.
 
