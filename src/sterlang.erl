@@ -1,17 +1,21 @@
 -module(sterlang).
 
--export([connect/0, close/1, create_account/2]).
+-export([connect/0, connect/2, close/1, create_account/2]).
 
 %%====================================================================
 %% API functions
 %%====================================================================
 
 %% @doc Opens a connection to the horizon base url endpoint.
--spec connect() -> {ok, pid()} | {error, any()}.
+-spec connect() -> supervisor:startchild_ret().
 connect() ->
-  sterlang_http_client:connect().
+  sterlang_http_sup:start_child([], []).
 
-%% @doc Closes the connection for the given Pid.
+-spec connect(list(), list()) -> supervisor:startchild_ret().
+connect(Args, Opts) ->
+  sterlang_http_sup:start_child(Args, Opts).
+
+%% @doc Closes the connection for the given sterlang_http Pid.
 -spec close(pid()) -> ok.
 close(Pid) ->
   sterlang_http_client:close(Pid).
