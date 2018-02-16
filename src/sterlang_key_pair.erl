@@ -56,6 +56,4 @@ make_key_pair(<<"S", _:55/binary>> = Seed) ->
   PrivateKey = sterlang_key_gen:bytes_from_base32_seed(Seed),
   PublicKey = sterlang_key_gen:address_from_bytes(PrivateKey),
 
-  #key_pair{seed = Seed,
-          private_key = PrivateKey,
-          public_key = PublicKey}.
+  #key_pair{seed = Seed, private_key = PrivateKey, public_key = PublicKey}.

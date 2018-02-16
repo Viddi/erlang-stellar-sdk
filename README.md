@@ -17,7 +17,9 @@ This is project is still being developed and should not be used in its current s
 ```
 KeyPair = sterlang_key_pair:random().
 PublicKey = sterlang_key_pair:public_key(KeyPair).
-sterlang:create_account(PublicKey).
+
+{ok, Pid} = sterlang:connect().
+{Status, Headers, Body} = sterlang:create_account(Pid, PublicKey).
 ```
 
 ### TODO
@@ -26,7 +28,7 @@ sterlang:create_account(PublicKey).
 - [X] Add `spec`s for all functions.
 - [X] Add documentation for all functions.
 - [X] Add tests.
-- [ ] Add HTTP response records.
+- [X] Add HTTP response records.
 - [ ] Send/Receive payments.
 - [ ] Better Elixir interop.
 

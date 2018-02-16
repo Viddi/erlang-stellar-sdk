@@ -27,7 +27,7 @@ get(Pid, Url) ->
   gen_server:call(Pid, {get, Url}).
 
 %%====================================================================
-%% Internal functions
+%% GenServer callbacks
 %%====================================================================
 init(_Args) ->
   %% TODO: Extract a custom url for testing purposes.
@@ -68,6 +68,9 @@ handle_info({gun_down, Pid, http}, State) ->
 terminate(_Reason, _State) ->
   ok.
 
+%%====================================================================
+%% Internal functions
+%%====================================================================
 -spec await_response(pid(), reference()) -> sterlang_http:response().
 await_response(Pid, Ref) ->
   case gun:await(Pid, Ref) of
