@@ -91,6 +91,8 @@
 -export([enc_TransactionResultCode/1, dec_TransactionResultCode/2]).
 -export([enc_TransactionResult/1, dec_TransactionResult/2]).
 
+-export([io_list_len/1]).
+
 enc_Hash(_1) ->
   case io_list_len(_1) of
     32 ->
@@ -242,6 +244,7 @@ dec_SignerKeyType_i2a(_4) ->
       'SIGNER_KEY_TYPE_HASH_X'
   end.
 
+%% @todo _1 = {'PUBLIC_KEY_TYPE_ED25519', PublicKey}.
 enc_PublicKey(_1) ->
   case _1 of
     {_2, _3} ->
@@ -1180,6 +1183,7 @@ dec_OperationType_i2a(_4) ->
       'MANAGE_DATA'
   end.
 
+%% @todo _1 = {AccountID, StartingBalance}.
 enc_CreateAccountOp(_1) ->
   case _1 of
     {_3, _2} ->
@@ -1561,6 +1565,7 @@ dec_ManageDataOp(_1, _2) ->
     {{_3, _5}, _6}
   end.
 
+%% @todo _1 = {AccountID, {OperationType, OperationBody}}
 enc_Operation(_1) ->
   case _1 of
     {_5, _2} ->
