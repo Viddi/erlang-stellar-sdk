@@ -24,5 +24,4 @@ to_xdr(#operation_create_account{source_account = Source, destination = Dest,
   XdrDestination = sterlang_key_pair:xdr_public_key(Dest), %% AccountID
   CreateAccountOp = {XdrDestination, StartingBalance},
   OperationBody = {'CREATE_ACCOUNT', CreateAccountOp},
-  Xdr = sterlang_operation:to_xdr(Source, OperationBody),
-  sterlang_operation:to_base64(Xdr).
+  sterlang_operation:to_xdr(Source, OperationBody).

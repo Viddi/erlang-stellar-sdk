@@ -4,8 +4,8 @@
 -export([xdr_public_key/1]).
 
 -record(key_pair, {seed = undefined :: undefined | bitstring(),
-                   private_key = undefined :: undefined | binary(),
-                   public_key = undefined :: undefined | bitstring()}).
+  private_key = undefined :: undefined | binary(),
+  public_key = undefined :: undefined | bitstring()}).
 
 -opaque key_pair() :: #key_pair{}.
 
@@ -50,7 +50,7 @@ public_key(#key_pair{public_key = PublicKey}) ->
   PublicKey.
 
 %% @doc Converts the public key for the given key pair to an Xdr tuple.
--spec xdr_public_key(key_pair()) -> {'PUBLIC_KEY_TYPE_ED25519', bitstring()}.
+-spec xdr_public_key(key_pair()) -> {'PUBLIC_KEY_TYPE_ED25519', [byte()]}.
 xdr_public_key(#key_pair{public_key = PublicKey}) ->
   Decoded = base32:decode(PublicKey),
   <<_Version:8, Payload:32/binary, _Checksum:2/binary>> = Decoded,
