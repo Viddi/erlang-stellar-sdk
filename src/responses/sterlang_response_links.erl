@@ -6,10 +6,10 @@
 -export([effects/1, precedes/1, self/1, succeeds/1, transactions/1]).
 
 -record(response_links, {effects = undefined :: sterlang_response_effects:response_effects(),
-                         precedes = undefined :: sterlang_response_precedes:response_precedes(),
-                         self = undefined :: sterlang_response_self:response_self(),
-                         succeeds = undefined :: sterlang_response_succeeds:response_succeeds(),
-                         transactions = undefined :: sterlang_response_transactions:response_transactions()}).
+  precedes = undefined :: sterlang_response_precedes:response_precedes(),
+  self = undefined :: sterlang_response_self:response_self(),
+  succeeds = undefined :: sterlang_response_succeeds:response_succeeds(),
+  transactions = undefined :: sterlang_response_transactions:response_transactions()}).
 
 -opaque response_links() :: #response_links{}.
 
@@ -24,7 +24,7 @@ decode(Links) ->
   Transactions = sterlang_response_transactions:decode(maps:get(<<"transactions">>, Links)),
 
   #response_links{effects = Effects, precedes = Precedes, self = Self,
-                 succeeds = Succeeds, transactions = Transactions}.
+    succeeds = Succeeds, transactions = Transactions}.
 
 -spec encode(response_links()) -> iodata().
 encode(#response_links{} = Links) ->
