@@ -54,7 +54,7 @@ public_key(#key_pair{public_key = PublicKey}) ->
 xdr_public_key(#key_pair{public_key = PublicKey}) ->
   Decoded = base32:decode(PublicKey),
   <<_Version:8, Payload:32/binary, _Checksum:2/binary>> = Decoded,
-  {'PUBLIC_KEY_TYPE_ED25519', binary_to_list(Payload)}.
+  {public_key_type_ed25519, Payload}.
 
 %%====================================================================
 %% Internal functions
