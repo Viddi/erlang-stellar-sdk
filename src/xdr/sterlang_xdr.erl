@@ -1,11 +1,12 @@
 -module(sterlang_xdr).
 
 -export([encode_uint256/1]).
+-export([encode_int64/1]).
 
 %%====================================================================
 %% API functions
 %%====================================================================
--spec encode_uint256(non_neg_integer()) -> non_neg_integer() | {xdr, limit}.
+-spec encode_uint256(non_neg_integer()) -> binary() | {xdr, limit}.
 encode_uint256(N) when is_binary(N) ->
   case byte_size(N) of
     32 ->
@@ -13,3 +14,7 @@ encode_uint256(N) when is_binary(N) ->
     _ ->
       exit({xdr, limit})
   end.
+
+-spec encode_int64(non_neg_integer()) -> <<_:_*64>>.
+encode_int64(N) ->
+  <<N:64>>.

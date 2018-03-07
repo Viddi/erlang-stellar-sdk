@@ -50,11 +50,9 @@ public_key(#key_pair{public_key = PublicKey}) ->
   PublicKey.
 
 %% @doc Converts the public key for the given key pair to an Xdr tuple.
--spec xdr_public_key(key_pair()) -> {'PUBLIC_KEY_TYPE_ED25519', [byte()]}.
-xdr_public_key(#key_pair{public_key = PublicKey}) ->
-  Decoded = base32:decode(PublicKey),
-  <<_Version:8, Payload:32/binary, _Checksum:2/binary>> = Decoded,
-  {public_key_type_ed25519, Payload}.
+-spec xdr_public_key(key_pair()) -> binary().
+xdr_public_key(#key_pair{} = KeyPair) ->
+  sterlang_xdr_public_key:encode(KeyPair).
 
 %%====================================================================
 %% Internal functions
