@@ -4,20 +4,14 @@
 
 encode_test() ->
   KeyPair = key_pair(),
-  PublicKey = sterlang_key_pair:public_key(KeyPair),
-  Decoded = base32:decode(PublicKey),
-  Type = public_key_type_ed25519,
-  <<_Version:8, Payload:32/binary, _Checksum:2/binary>> = Decoded,
 
-  Input = {Type, Payload},
-  Binary = sterlang_xdr_public_key:encode(Input),
+  Binary = sterlang_xdr_public_key:encode(KeyPair),
 
   ?assertEqual(36, byte_size(Binary)),
 
-  <<TypeBinary:4/binary, PublicKeyBinary:32/binary>> = Binary,
+  <<TypeBinary:4/binary, _:32/binary>> = Binary,
 
-  ?assertEqual(TypeBinary, sterlang_xdr_public_key_type:encode(Type)),
-  ?assertEqual(PublicKeyBinary, Payload).
+  ?assertEqual(TypeBinary, sterlang_xdr_public_key_type:encode(public_key_type_ed25519)).
 
 key_pair() ->
   sterlang_key_pair:random().

@@ -4,11 +4,9 @@
 
 -callback to_xdr(any()) -> binary().
 
--spec to_xdr(sterlang_key_pair:key_pair(), tuple()) -> list().
-to_xdr(Source, XdrBody) ->
-  XdrSource = sterlang_key_pair:xdr_public_key(Source),
-  Xdr = {XdrSource, XdrBody}, %% Operation
-  sterlang_xdr_transaction:enc_Operation(Xdr).
+-spec to_xdr(sterlang_key_pair:key_pair(), {tuple(), tuple()}) -> list().
+to_xdr(Source, {Type, OperationBody}) ->
+  sterlang_xdr_operation:encode({Source, {Type, OperationBody}}).
 
 %% TODO: Finish me
 %%to_base64(Xdr) ->

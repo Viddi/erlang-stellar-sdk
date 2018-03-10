@@ -1,7 +1,7 @@
 -module(sterlang_key_pair).
 
 -export([random/0, from_bytes/1, from_secret/1, secret/1, private_key/1, public_key/1]).
--export([xdr_public_key/1]).
+-export([to_xdr/1]).
 
 -record(key_pair, {seed = undefined :: undefined | bitstring(),
   private_key = undefined :: undefined | binary(),
@@ -50,8 +50,8 @@ public_key(#key_pair{public_key = PublicKey}) ->
   PublicKey.
 
 %% @doc Converts the public key for the given key pair to an Xdr tuple.
--spec xdr_public_key(key_pair()) -> binary().
-xdr_public_key(#key_pair{} = KeyPair) ->
+-spec to_xdr(key_pair()) -> binary().
+to_xdr(#key_pair{} = KeyPair) ->
   sterlang_xdr_public_key:encode(KeyPair).
 
 %%====================================================================
