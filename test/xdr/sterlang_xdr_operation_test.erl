@@ -6,7 +6,6 @@ encode_create_account_test() ->
   Source = sterlang_key_pair:random(),
   Dest = sterlang_key_pair:random(),
   Balance = 1000,
-  %% CreateAccount = sterlang_operation_create_account:make_operation(Source, Dest, Balance),
   Encoded = sterlang_xdr_operation:encode({Source, {create_account, {Dest, Balance}}}),
 
   ?assert(is_binary(Encoded)),
