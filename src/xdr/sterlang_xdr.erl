@@ -6,7 +6,7 @@
 %%====================================================================
 %% API functions
 %%====================================================================
--spec encode_uint256(non_neg_integer()) -> binary() | {xdr, limit}.
+-spec encode_uint256(binary()) -> binary().
 encode_uint256(N) when is_binary(N) ->
   case byte_size(N) of
     32 ->

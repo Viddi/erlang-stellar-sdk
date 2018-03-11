@@ -4,7 +4,7 @@
 
 -callback to_xdr(any()) -> binary().
 
--spec to_xdr(sterlang_key_pair:key_pair(), {tuple(), tuple()}) -> list().
+-spec to_xdr(undefined | sterlang_key_pair:key_pair(), {atom(), tuple()}) -> binary().
 to_xdr(Source, {Type, OperationBody}) ->
   sterlang_xdr_operation:encode({Source, {Type, OperationBody}}).
 

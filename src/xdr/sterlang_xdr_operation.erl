@@ -2,11 +2,11 @@
 
 -export([encode/1]).
 
--spec encode({sterlang_key_pair:key_pair(), {tuple(), tuple()}}) -> binary().
+-spec encode({undefined | sterlang_key_pair:key_pair(), {atom(), tuple()}}) -> binary().
 encode({SourceAccount, {Type, Body}}) ->
   EncodedSource =
     case SourceAccount of
-      void -> %% TODO: Change value to something other than void
+      undefined ->
         <<0:32>>;
       _ ->
         Encoded = sterlang_xdr_account_id:encode(SourceAccount),
