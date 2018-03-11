@@ -6,7 +6,7 @@
 -export([href/1, templated/1]).
 
 -record(response_effects, {href = undefined :: href_type(),
-                           templated = undefined :: templated_type()}).
+  templated = undefined :: templated_type()}).
 
 -opaque response_effects() :: #response_effects{}.
 
@@ -19,7 +19,7 @@
 decode(Effects) ->
   Href = maps:get(<<"href">>, Effects),
   Templated = maps:get(<<"templated">>, Effects),
-  
+
   #response_effects{href = Href, templated = Templated}.
 
 -spec encode(response_effects()) -> iodata().

@@ -41,3 +41,10 @@ key_equality_test() ->
   <<"G", PublicPayload:32/binary, _/binary>> = PublicKey,
 
   ?assertNotEqual(SecretPayload, PublicPayload).
+
+to_xdr_test() ->
+  KeyPair = sterlang_key_pair:random(),
+  Xdr = sterlang_key_pair:to_xdr(KeyPair),
+
+  ?assert(is_binary(Xdr)),
+  ?assertEqual(36, byte_size(Xdr)).
