@@ -1,6 +1,6 @@
 -module(sterlang_operation_create_account).
 
--behavior(sterlang_operation).
+-behaviour(sterlang_operation).
 
 -export([make_operation/3, source_account/1, destination/1, starting_balance/1]).
 -export([to_xdr/1]).
@@ -14,9 +14,8 @@
 
 -opaque operation_create_account() :: #operation_create_account{}.
 
--export_type([account/0]).
+-export_type([account/0, starting_balance/0]).
 -export_type([operation_create_account/0]).
--export_type([starting_balance/0]).
 
 -spec make_operation(account(), account(), starting_balance()) -> operation_create_account().
 make_operation(Source, Destination, Balance) ->

@@ -19,6 +19,8 @@ encode({SourceAccount, {Type, Body}}) ->
     case Type of
       create_account ->
         sterlang_xdr_create_account:encode(Body);
+      payment ->
+        sterlang_xdr_payment:encode(Body);
       _ ->
         %% TODO: Finish other operation xdr encoding
         throw(unsupported_operation)
