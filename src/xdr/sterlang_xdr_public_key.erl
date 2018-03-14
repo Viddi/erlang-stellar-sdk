@@ -1,5 +1,7 @@
 -module(sterlang_xdr_public_key).
 
+-behaviour(sterlang_xdr).
+
 -export([encode/1]).
 
 -opaque xdr_public_key() :: {atom(), binary()}.

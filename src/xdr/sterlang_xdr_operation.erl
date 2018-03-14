@@ -1,5 +1,7 @@
 -module(sterlang_xdr_operation).
 
+-behaviour(sterlang_xdr).
+
 -export([encode/1]).
 
 -spec encode({undefined | sterlang_key_pair:key_pair(), {atom(), tuple()}}) -> binary().
