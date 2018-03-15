@@ -12,7 +12,9 @@ encode(Type) ->
     credit_alphanum4 ->
       <<1:32>>;
     credit_alphanum12 ->
-      <<2:32>>
+      <<2:32>>;
+    _ ->
+      throw(invalid_type)
   end.
 
 %% TODO: Finish me
