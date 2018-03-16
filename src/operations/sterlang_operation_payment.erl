@@ -6,15 +6,15 @@
 
 -record(operation_payment, {source_account = undefined :: account(),
   destination = undefined :: account(),
-  asset = undefined, %% TODO: Add Asset module
+  asset = undefined :: asset(),
   amount = undefined :: amount()}).
 
 -type account() :: undefined | sterlang_key_pair:key_pair().
+-type asset() :: undefined | sterlang_asset_native:asset_native(). %% TODO: Add other Asset types
 -type amount() :: undefined | non_neg_integer().
 
 -opaque operation_payment() :: #operation_payment{}.
 
--export_type([account/0, amount/0]).
 -export_type([operation_payment/0]).
 
 make_operation(Source, Destination, Asset, Amount) ->

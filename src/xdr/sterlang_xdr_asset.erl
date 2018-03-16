@@ -7,9 +7,9 @@
 %%====================================================================
 %% API functions
 %%====================================================================
--spec encode({atom(), tuple()}) -> binary().
-encode({Type, Body}) ->
-  EncodedType = sterlang_xdr_asset_type:encode(Type),
+-spec encode(sterlang_asset_native:asset_native()) -> binary().
+encode(Asset) ->
+  {Type, Body} = make_xdr(Asset),
 
   EncodedBody =
     case Type of
@@ -29,6 +29,8 @@ encode({Type, Body}) ->
 
         <<EncodedAssetCode/binary, EncodedIssuer/binary>>
     end,
+
+  EncodedType = sterlang_xdr_asset_type:encode(Type),
 
   <<EncodedType/binary, EncodedBody/binary>>.
 
@@ -69,6 +71,10 @@ encode({Type, Body}) ->
 %%====================================================================
 %% Internal functions
 %%====================================================================
+-spec make_xdr(sterlang_asset_native) -> binary().
+make_xdr(sterlang_asset_native) ->
+  {native, {}}.
+
 -spec encode_alpha_num(non_neg_integer(), bitstring()) -> binary().
 encode_alpha_num(N, AssetCode) ->
   case byte_size(AssetCode) of

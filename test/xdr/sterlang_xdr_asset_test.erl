@@ -3,7 +3,8 @@
 -include_lib("eunit/include/eunit.hrl").
 
 encode_native_test() ->
-  Encoded = sterlang_xdr_asset:encode({native, {undefined}}),
+  Asset = sterlang_asset_native:make_asset(),
+  Encoded = sterlang_xdr_asset:encode(Asset),
 
   ?assert(is_binary(Encoded)),
   ?assertEqual(4, byte_size(Encoded)),
