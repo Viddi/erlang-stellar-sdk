@@ -13,3 +13,11 @@ encode_native_test() ->
 
   ?assertEqual(<<0:32>>, EncodedType),
   ?assertEqual(<<>>, EncodedBody).
+
+encode_alpha_num12_test() ->
+  Code = <<"testest">>,
+  Issuer = sterlang_key_pair:random(),
+  Asset = sterlang_asset_alpha_num12:make_asset(Code, Issuer),
+  Encoded = sterlang_xdr_asset:encode(Asset),
+
+  ?assert(is_binary(Encoded)).

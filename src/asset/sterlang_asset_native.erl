@@ -19,4 +19,4 @@ type() ->
 
 -spec to_xdr(any()) -> binary().
 to_xdr(_) ->
-  sterlang_xdr_asset:encode(sterlang_asset_native).
+  sterlang_xdr_asset:encode({native, {}}).

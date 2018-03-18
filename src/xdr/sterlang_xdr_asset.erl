@@ -7,7 +7,7 @@
 %%====================================================================
 %% API functions
 %%====================================================================
--spec encode(sterlang_asset_native:asset_native()) -> binary().
+-spec encode({atom(), tuple()}) -> binary().
 encode(Asset) ->
   {Type, Body} = make_xdr(Asset),
 
@@ -17,14 +17,14 @@ encode(Asset) ->
         <<>>;
       credit_alphanum4 ->
         {AssetCode, Issuer} = Body,
-        EncodedAssetCode = encode_alpha_num(4, AssetCode),
+        EncodedAssetCode = encode_alpha_num(AssetCode, byte_size(AssetCode), 0, 4),
         EncodedIssuer = sterlang_xdr_account_id:encode(Issuer),
 
         <<EncodedAssetCode/binary, EncodedIssuer/binary>>;
       credit_alphanum12 ->
         {AssetCode, Issuer} = Body,
 
-        EncodedAssetCode = encode_alpha_num(12, AssetCode),
+        EncodedAssetCode = encode_alpha_num(AssetCode, byte_size(AssetCode), 5, 12),
         EncodedIssuer = sterlang_xdr_account_id:encode(Issuer),
 
         <<EncodedAssetCode/binary, EncodedIssuer/binary>>
@@ -71,15 +71,38 @@ encode(Asset) ->
 %%====================================================================
 %% Internal functions
 %%====================================================================
--spec make_xdr(sterlang_asset_native) -> binary().
+-spec make_xdr(
+    sterlang_asset_native |
+    sterlang_asset_alpha_num12:asset_alpha_num12())
+      -> {atom(), tuple()}.
 make_xdr(sterlang_asset_native) ->
-  {native, {}}.
+  {native, {}};
+make_xdr(Asset) ->
+  {Mod, _, _} = Asset,
 
--spec encode_alpha_num(non_neg_integer(), bitstring()) -> binary().
-encode_alpha_num(N, AssetCode) ->
-  case byte_size(AssetCode) of
-    N ->
-      AssetCode;
-    _ ->
-      exit({xdr, limit})
+  case Mod of
+    asset_alpha_num4 ->
+%%      Code = sterlang_asset_alpha_num4:code(Asset),
+%%      Issuer = Mod:issuer(Asset),
+%%      {credit_alphanum4, {Code, Issuer}};
+      {};
+    asset_alpha_num12 ->
+      Code = sterlang_asset_alpha_num12:code(Asset),
+      Issuer = sterlang_asset_alpha_num12:issuer(Asset),
+      {credit_alphanum12, {Code, Issuer}}
   end.
+
+
+-spec encode_alpha_num(bitstring(), non_neg_integer(), non_neg_integer(), non_neg_integer()) -> binary().
+encode_alpha_num(_, Size, Lower, _) when Size < Lower ->
+  throw(invalid_alphanum_code_lower);
+encode_alpha_num(_, Size, _, Upper) when Size > Upper ->
+  throw(invalid_alphanum_code_upper);
+encode_alpha_num(Code, _, _, Upper) ->
+  pad(Upper - byte_size(Code), 0, Code).
+
+-spec pad(non_neg_integer(), non_neg_integer(), bitstring()) -> binary().
+pad(Padding, N, Acc) when N < Padding ->
+  pad(Padding, N + 1, <<Acc/binary, 0>>);
+pad(Padding, N, Acc) when Padding >= N ->
+  Acc.

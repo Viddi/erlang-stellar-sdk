@@ -4,7 +4,8 @@
 
 -export([encode/1]).
 
--spec encode({sterlang_key_pair:key_pair(), tuple(), non_neg_integer()}) -> binary().
+-spec encode({sterlang_key_pair:key_pair(), sterlang_asset_native | tuple(), non_neg_integer()})
+      -> binary().
 encode({Account, Asset, Amount}) ->
   EncodedAccount = sterlang_xdr_account_id:encode(Account),
   EncodedAsset = sterlang_xdr_asset:encode(Asset),
