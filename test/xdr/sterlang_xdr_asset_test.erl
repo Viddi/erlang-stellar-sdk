@@ -30,8 +30,6 @@ encode_alpha_num4_test() ->
   ?assertEqual(Code, EncodedAssetCode),
   ?assertEqual(sterlang_xdr_account_id:encode(Issuer), EncodedIssuer).
 
-
-
 encode_alpha_num12_test() ->
   Code = <<"testest">>,
   Issuer = sterlang_key_pair:random(),

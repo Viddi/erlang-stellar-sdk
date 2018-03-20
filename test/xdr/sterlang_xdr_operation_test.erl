@@ -51,4 +51,3 @@ encode_payment_test() ->
   ?assertEqual(sterlang_xdr_public_key:encode(Dest), EncodedDest),
   ?assertEqual(sterlang_xdr_asset_type:encode(native), EncodedAsset),
   ?assertEqual(<<Amount:64>>, EncodedAmount).
-
