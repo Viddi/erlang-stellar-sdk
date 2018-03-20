@@ -13,9 +13,8 @@
 -type asset() :: undefined | sterlang_asset_native:asset_native(). %% TODO: Add other Asset types
 -type amount() :: undefined | non_neg_integer().
 
--opaque operation_payment() :: #operation_payment{}.
-
--export_type([operation_payment/0]).
+%% sterlang_xdr_asset needs this type for its encode/1 function
+-type operation_payment() :: #operation_payment{}.
 
 make_operation(Source, Destination, Asset, Amount) ->
   #operation_payment{source_account = Source, destination = Destination,

@@ -11,9 +11,8 @@
 -type code() :: undefined | bitstring().
 -type issuer() :: undefined | sterlang_key_pair:key_pair().
 
--opaque asset_alpha_num12() :: #asset_alpha_num12{}.
-
--export_type([asset_alpha_num12/0]).
+%% sterlang_xdr_asset needs this type for its encode/1 function
+-type asset_alpha_num12() :: #asset_alpha_num12{}.
 
 -spec make_asset(code(), issuer()) -> asset_alpha_num12().
 make_asset(Code, Issuer) ->

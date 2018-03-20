@@ -4,10 +4,14 @@
 
 -export([encode/1]).
 
+-type asset() :: sterlang_asset_native:asset_native()
+  | sterlang_asset_alpha_num4:asset_alpha_num4()
+  | sterlang_asset_alpha_num12:asset_alpha_num12().
+
 %%====================================================================
 %% API functions
 %%====================================================================
--spec encode({atom(), tuple()}) -> binary().
+-spec encode(asset()) -> binary().
 encode(Asset) ->
   {Type, Body} = make_xdr(Asset),
 
@@ -71,10 +75,7 @@ encode(Asset) ->
 %%====================================================================
 %% Internal functions
 %%====================================================================
--spec make_xdr(
-    sterlang_asset_native |
-    sterlang_asset_alpha_num12:asset_alpha_num12())
-      -> {atom(), tuple()}.
+-spec make_xdr(asset()) -> {atom(), tuple()}.
 make_xdr(sterlang_asset_native) ->
   {native, {}};
 make_xdr(Asset) ->
