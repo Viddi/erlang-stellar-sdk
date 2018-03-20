@@ -7,9 +7,7 @@
   private_key = undefined :: undefined | binary(),
   public_key = undefined :: undefined | bitstring()}).
 
--opaque key_pair() :: #key_pair{}.
-
--export_type([key_pair/0]).
+-type key_pair() :: #key_pair{}.
 
 %%====================================================================
 %% API functions

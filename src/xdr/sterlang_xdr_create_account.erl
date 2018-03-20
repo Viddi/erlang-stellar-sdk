@@ -1,5 +1,7 @@
 -module(sterlang_xdr_create_account).
 
+-behaviour(sterlang_xdr).
+
 -export([encode/1]).
 
 -spec encode({sterlang_key_pair:key_pair(), non_neg_integer()}) -> binary().

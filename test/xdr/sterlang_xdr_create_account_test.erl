@@ -12,5 +12,5 @@ encode_test() ->
 
   <<EncodedAccount:36/binary, EncodedBalance:8/binary>> = Encoded,
 
-  ?assertEqual(sterlang_xdr_public_key:encode(Account), EncodedAccount),
+  ?assertEqual(sterlang_xdr_account_id:encode(Account), EncodedAccount),
   ?assertEqual(<<Balance:64>>, EncodedBalance).

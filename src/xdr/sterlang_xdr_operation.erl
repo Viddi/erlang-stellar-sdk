@@ -1,5 +1,7 @@
 -module(sterlang_xdr_operation).
 
+-behaviour(sterlang_xdr).
+
 -export([encode/1]).
 
 -spec encode({undefined | sterlang_key_pair:key_pair(), {atom(), tuple()}}) -> binary().
@@ -19,6 +21,8 @@ encode({SourceAccount, {Type, Body}}) ->
     case Type of
       create_account ->
         sterlang_xdr_create_account:encode(Body);
+      payment ->
+        sterlang_xdr_payment:encode(Body);
       _ ->
         %% TODO: Finish other operation xdr encoding
         throw(unsupported_operation)

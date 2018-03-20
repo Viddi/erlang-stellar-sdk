@@ -1,5 +1,7 @@
 -module(sterlang_xdr_public_key_type).
 
+-behaviour(sterlang_xdr).
+
 -export([encode/1]).
 
 -spec encode(atom()) -> binary().
