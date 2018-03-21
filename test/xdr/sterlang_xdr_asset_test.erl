@@ -16,7 +16,7 @@ encode_native_test() ->
 
 encode_alpha_num4_test() ->
   Code = <<"test">>,
-  Issuer = sterlang_key_pair:random(),
+  Issuer = sterlang_key_pair:from_secret(secret()),
   Asset = sterlang_asset_alpha_num4:make_asset(Code, Issuer),
   Encoded = sterlang_xdr_asset:encode(Asset),
 
@@ -32,7 +32,7 @@ encode_alpha_num4_test() ->
 
 encode_alpha_num12_test() ->
   Code = <<"testest">>,
-  Issuer = sterlang_key_pair:random(),
+  Issuer = sterlang_key_pair:from_secret(secret()),
   Asset = sterlang_asset_alpha_num12:make_asset(Code, Issuer),
   Encoded = sterlang_xdr_asset:encode(Asset),
 
@@ -45,3 +45,6 @@ encode_alpha_num12_test() ->
   <<EncodedAssetCode:12/binary, EncodedIssuer:36/binary>> = EncodedBody,
   ?assertEqual(<<Code/binary, 0, 0, 0, 0, 0>>, EncodedAssetCode),
   ?assertEqual(sterlang_xdr_account_id:encode(Issuer), EncodedIssuer).
+
+secret() ->
+  <<"SBJZFYAOGKAKCJDT3F5QH6XY4J3SFY7HX3XWYVJLGSVHCGQL6YFCILH3">>.

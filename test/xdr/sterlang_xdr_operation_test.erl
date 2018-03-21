@@ -3,8 +3,8 @@
 -include_lib("eunit/include/eunit.hrl").
 
 encode_create_account_test() ->
-  Source = sterlang_key_pair:random(),
-  Dest = sterlang_key_pair:random(),
+  Source = sterlang_key_pair:from_secret(<<"SBDTL3K23MTDMSSCHWOGBGFAF32THKPKOME3SIWTRNQPERQMAYZMRWNN">>),
+  Dest = sterlang_key_pair:from_secret(<<"SBA22K2MVQPBV7FCIHY3SZAYO2NYRUWZV4YBYBM5X47CFPQB7IAISZBF">>),
   Balance = 1000,
   Encoded = sterlang_xdr_operation:encode({Source, {create_account, {Dest, Balance}}}),
 
@@ -27,8 +27,8 @@ encode_create_account_test() ->
   ?assertEqual(<<Balance:64>>, EncodedBalance).
 
 encode_payment_test() ->
-  Source = sterlang_key_pair:random(),
-  Dest = sterlang_key_pair:random(),
+  Source = sterlang_key_pair:from_secret(<<"SBDTL3K23MTDMSSCHWOGBGFAF32THKPKOME3SIWTRNQPERQMAYZMRWNN">>),
+  Dest = sterlang_key_pair:from_secret(<<"SBA22K2MVQPBV7FCIHY3SZAYO2NYRUWZV4YBYBM5X47CFPQB7IAISZBF">>),
   Asset = sterlang_asset_native:make_asset(),
   Amount = 1000,
   Encoded = sterlang_xdr_operation:encode({Source, {payment, {Dest, Asset, Amount}}}),

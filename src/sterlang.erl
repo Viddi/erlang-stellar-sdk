@@ -36,7 +36,7 @@ create_account(Pid, PublicKey) ->
 %%====================================================================
 -spec horizon_create_account_url(binary()) -> [byte(), ...].
 horizon_create_account_url(PublicKey) ->
-  "/friendbot?addr=" ++ binary_to_list(PublicKey).
+  "/?addr=" ++ binary_to_list(PublicKey).
 
 %% -spec horizon_account_details_url(string()) -> string().
 %% horizon_account_details_url(PublicKey) ->

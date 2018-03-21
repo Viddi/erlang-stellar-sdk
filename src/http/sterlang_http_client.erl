@@ -31,7 +31,7 @@ get(Pid, Url) ->
 %%====================================================================
 init(_Args) ->
   %% TODO: Extract a custom url for testing purposes.
-  case gun:open("horizon-testnet.stellar.org", 443) of
+  case gun:open("friendbot.stellar.org", 443) of
     {ok, Pid} ->
       State = #state{gun_pid = Pid},
       {ok, State};

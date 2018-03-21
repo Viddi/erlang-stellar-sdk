@@ -3,7 +3,7 @@
 -include_lib("eunit/include/eunit.hrl").
 
 secret_test() ->
-  KeyPair = sterlang_key_pair:random(),
+  KeyPair = sterlang_key_pair:from_secret(secret()),
   Secret = sterlang_key_pair:secret(KeyPair),
 
   ?assert(is_binary(Secret)),
@@ -43,8 +43,11 @@ key_equality_test() ->
   ?assertNotEqual(SecretPayload, PublicPayload).
 
 to_xdr_test() ->
-  KeyPair = sterlang_key_pair:random(),
+  KeyPair = sterlang_key_pair:from_secret(secret()),
   Xdr = sterlang_key_pair:to_xdr(KeyPair),
 
   ?assert(is_binary(Xdr)),
   ?assertEqual(36, byte_size(Xdr)).
+
+secret() ->
+  <<"SBJZFYAOGKAKCJDT3F5QH6XY4J3SFY7HX3XWYVJLGSVHCGQL6YFCILH3">>.
