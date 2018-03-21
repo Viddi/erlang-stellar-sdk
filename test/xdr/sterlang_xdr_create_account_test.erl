@@ -3,7 +3,7 @@
 -include_lib("eunit/include/eunit.hrl").
 
 encode_test() ->
-  Account = sterlang_key_pair:random(),
+  Account = sterlang_key_pair:from_secret(<<"SBJZFYAOGKAKCJDT3F5QH6XY4J3SFY7HX3XWYVJLGSVHCGQL6YFCILH3">>),
   Balance = 1000,
   Encoded = sterlang_xdr_create_account:encode({Account, Balance}),
 
