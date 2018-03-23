@@ -4,18 +4,15 @@
 
 -export([encode/1]).
 
--spec encode(atom()) -> binary().
-encode(Type) ->
-  case Type of
-    native ->
-      <<0:32>>;
-    credit_alphanum4 ->
-      <<1:32>>;
-    credit_alphanum12 ->
-      <<2:32>>;
-    _ ->
-      throw(invalid_type)
-  end.
+-spec encode(atom()) -> <<_:_*32>>.
+encode(native) ->
+  <<0:32>>;
+encode(credit_alphanum4) ->
+  <<1:32>>;
+encode(credit_alphanum12) ->
+  <<2:32>>;
+encode(_) ->
+  throw(invalid_asset_type).
 
 %% TODO: Finish me
 %%dec_AssetType(_1, _2) ->
