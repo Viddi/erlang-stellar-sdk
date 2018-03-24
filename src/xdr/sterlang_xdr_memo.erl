@@ -15,7 +15,14 @@ encode(Memo) ->
       memo_none ->
         <<>>;
       memo_text ->
-        <<>>;
+        %% Body is text bitstring
+        Size = byte_size(Body),
+        if
+          Size =< 28 ->
+            Aligned = encode_align(Size),
+            <<Size:32/unsigned, Body/binary, Aligned/binary>>;
+          true -> throw(memo_text_too_long)
+        end;
       memo_id ->
         <<>>;
       memo_hash ->
