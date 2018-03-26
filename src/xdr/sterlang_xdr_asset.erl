@@ -78,19 +78,14 @@ encode(Asset) ->
 -spec make_xdr(asset()) -> {atom(), tuple()}.
 make_xdr(sterlang_asset_native) ->
   {native, {}};
-make_xdr(Asset) ->
-  {Mod, _, _} = Asset,
-
-  case Mod of
-    asset_alpha_num4 ->
-      Code = sterlang_asset_alpha_num4:code(Asset),
-      Issuer = sterlang_asset_alpha_num4:issuer(Asset),
-      {credit_alphanum4, {Code, Issuer}};
-    asset_alpha_num12 ->
-      Code = sterlang_asset_alpha_num12:code(Asset),
-      Issuer = sterlang_asset_alpha_num12:issuer(Asset),
-      {credit_alphanum12, {Code, Issuer}}
-  end.
+make_xdr({asset_alpha_num4, _, _} = Asset) ->
+  Code = sterlang_asset_alpha_num4:code(Asset),
+  Issuer = sterlang_asset_alpha_num4:issuer(Asset),
+  {credit_alphanum4, {Code, Issuer}};
+make_xdr({asset_alpha_num12, _, _} = Asset) ->
+  Code = sterlang_asset_alpha_num12:code(Asset),
+  Issuer = sterlang_asset_alpha_num12:issuer(Asset),
+  {credit_alphanum12, {Code, Issuer}}.
 
 -spec encode_alpha_num(bitstring(), non_neg_integer(), non_neg_integer(), non_neg_integer()) -> binary().
 encode_alpha_num(_, Size, Lower, _) when Size < Lower ->

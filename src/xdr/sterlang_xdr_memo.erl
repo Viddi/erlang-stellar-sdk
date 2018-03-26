@@ -24,7 +24,8 @@ encode(Memo) ->
           true -> throw(memo_text_too_long)
         end;
       memo_id ->
-        <<>>;
+        %% Body is id integer
+        sterlang_xdr:encode_uint64(Body);
       memo_hash ->
         <<>>;
       memo_return ->
@@ -100,7 +101,13 @@ encode(Memo) ->
 %% Internal functions
 %%====================================================================
 make_xdr(sterlang_memo_none) ->
-  {memo_none, {}}.
+  {memo_none, {}};
+make_xdr({memo_text, _, _} = Memo) ->
+  Text = sterlang_memo_id:id(Memo),
+  {memo_id, {Text}};
+make_xdr({memo_id, _, _} = Memo) ->
+  Id = sterlang_memo_id:id(Memo),
+  {memo_id, {Id}}.
 
 encode_align(Len) ->
   case Len rem 4 of
