@@ -3,6 +3,7 @@
 -behaviour(sterlang_xdr).
 
 -export([encode/1]).
+-export([pad/3]).
 
 -type asset() :: sterlang_asset_native:asset_native()
   | sterlang_asset_alpha_num4:asset_alpha_num4()

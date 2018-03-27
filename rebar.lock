@@ -1,5 +1,6 @@
 {"1.1.0",
-[{<<"base32">>,
+[{<<"base16">>,{pkg,<<"base16">>,<<"1.0.0">>},0},
+ {<<"base32">>,
   {git,"https://github.com/aetrion/base32_erlang.git",
        {ref,"40431a7480176b24863e18b92d9872e54c714df5"}},
   0},
@@ -11,6 +12,7 @@
  {<<"ranch">>,{pkg,<<"ranch">>,<<"1.4.0">>},1}]}.
 [
 {pkg_hash,[
+ {<<"base16">>, <<"283644E2B21BD5915ACB7178BED7851FB07C6E5749B8FAD68A53C501092176D9">>},
  {<<"base64url">>, <<"36A90125F5948E3AFD7BE97662A1504B934DD5DAC78451CA6E9ABF85A10286BE">>},
  {<<"cowlib">>, <<"F73658B93DD043AF40400C3E4FD997068EBD0C617F8C8F4CD003A1A78EBF94F5">>},
  {<<"gun">>, <<"DD53B9FD3D597CFA7974D6AD85128AC7E16A408D6DC8C392A532AA36EB032A5D">>},
