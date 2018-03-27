@@ -13,8 +13,10 @@
 
 -spec make_memo(hash()) -> memo_hash().
 make_memo(Hash) ->
-  %% Pad Hash
-  #memo_hash{hash = Hash}.
+  if
+    byte_size(Hash) > 32 -> throw(mem_hash_too_long);
+    true -> #memo_hash{hash = sterlang_util:pad(32, Hash)}
+  end.
 
 -spec hash(memo_hash()) -> hash().
 hash(#memo_hash{hash = Hash}) ->

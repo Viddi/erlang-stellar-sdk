@@ -15,7 +15,6 @@ encode(Memo) ->
       memo_none ->
         <<>>;
       memo_text ->
-        %% Body is text bitstring
         Size = byte_size(Body),
         if
           Size =< 28 ->
@@ -24,10 +23,9 @@ encode(Memo) ->
           true -> throw(memo_text_too_long)
         end;
       memo_id ->
-        %% Body is id integer
         sterlang_xdr:encode_uint64(Body);
       memo_hash ->
-        <<>>;
+        Body;
       memo_return ->
         <<>>
     end,
@@ -107,7 +105,10 @@ make_xdr({memo_text, _, _} = Memo) ->
   {memo_id, {Text}};
 make_xdr({memo_id, _, _} = Memo) ->
   Id = sterlang_memo_id:id(Memo),
-  {memo_id, {Id}}.
+  {memo_id, {Id}};
+make_xdr({memo_hash, _, _} = Memo) ->
+  Hash = sterlang_memo_hash:hash(Memo),
+  {memo_hash, {Hash}}.
 
 encode_align(Len) ->
   case Len rem 4 of

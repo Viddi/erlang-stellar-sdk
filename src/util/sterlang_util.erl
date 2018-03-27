@@ -11,7 +11,7 @@
 %% => <<1,0,0,0,0,0,0,0>>.
 %% 7 additional 0's were added as padding.
 pad(Upper, Bin) ->
-  pad(Upper, byte_size(Bin), Bin).
+  pad(Upper - byte_size(Bin), 0, Bin).
 
 %%====================================================================
 %% Internal functions
