@@ -27,7 +27,7 @@ encode(Memo) ->
       memo_hash ->
         Body;
       memo_return ->
-        <<>>
+        Body
     end,
 
   EncodedType = sterlang_xdr_memo_type:encode(Type),
@@ -108,7 +108,10 @@ make_xdr({memo_id, _, _} = Memo) ->
   {memo_id, {Id}};
 make_xdr({memo_hash, _, _} = Memo) ->
   Hash = sterlang_memo_hash:hash(Memo),
-  {memo_hash, {Hash}}.
+  {memo_hash, {Hash}};
+make_xdr({memo_return, _, _} = Memo) ->
+  Hash = sterlang_memo_return:hash(Memo),
+  {memo_return, {Hash}}.
 
 encode_align(Len) ->
   case Len rem 4 of
@@ -116,14 +119,6 @@ encode_align(Len) ->
     1 -> <<0, 0, 0>>;
     2 -> <<0, 0>>;
     3 -> <<0>>
-  end.
-
-encode_hash(Hash) ->
-  case byte_size(Hash) of
-    32 ->
-      Hash;
-    _ ->
-      exit({xdr, limit})
   end.
 
 %% TODO: Finish me

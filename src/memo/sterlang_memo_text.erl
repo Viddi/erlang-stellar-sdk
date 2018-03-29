@@ -13,7 +13,10 @@
 
 -spec make_memo(text()) -> memo_text().
 make_memo(Text) ->
-  #memo_text{text = Text}.
+  if
+    byte_size(Text) > 28 -> throw(memo_text_too_long);
+    true -> #memo_text{text = Text}
+  end.
 
 -spec text(memo_text()) -> text().
 text(#memo_text{text = Text}) ->
