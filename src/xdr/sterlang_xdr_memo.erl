@@ -18,6 +18,7 @@ encode(Memo) ->
         Size = byte_size(Body),
         if
           Size =< 28 ->
+            %% Is 'Aligned' necessary?
             Aligned = encode_align(Size),
             <<Size:32/unsigned, Body/binary, Aligned/binary>>;
           true -> throw(memo_text_too_long)
@@ -98,20 +99,20 @@ encode(Memo) ->
 %%====================================================================
 %% Internal functions
 %%====================================================================
-make_xdr(sterlang_memo_none) ->
+make_xdr(memo_none) ->
   {memo_none, {}};
-make_xdr({memo_text, _, _} = Memo) ->
-  Text = sterlang_memo_id:id(Memo),
-  {memo_id, {Text}};
-make_xdr({memo_id, _, _} = Memo) ->
+make_xdr({memo_text, _} = Memo) ->
+  Text = sterlang_memo_text:text(Memo),
+  {memo_text, Text};
+make_xdr({memo_id, _} = Memo) ->
   Id = sterlang_memo_id:id(Memo),
-  {memo_id, {Id}};
-make_xdr({memo_hash, _, _} = Memo) ->
+  {memo_id, Id};
+make_xdr({memo_hash, _} = Memo) ->
   Hash = sterlang_memo_hash:hash(Memo),
-  {memo_hash, {Hash}};
-make_xdr({memo_return, _, _} = Memo) ->
+  {memo_hash, Hash};
+make_xdr({memo_return, _} = Memo) ->
   Hash = sterlang_memo_return:hash(Memo),
-  {memo_return, {Hash}}.
+  {memo_return, Hash}.
 
 encode_align(Len) ->
   case Len rem 4 of

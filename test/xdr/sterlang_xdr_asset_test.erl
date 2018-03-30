@@ -11,7 +11,7 @@ encode_native_test() ->
 
   <<EncodedType:4/binary, EncodedBody/binary>> = Encoded,
 
-  ?assertEqual(<<0:32>>, EncodedType),
+  ?assertEqual(sterlang_xdr_asset_type:encode(native), EncodedType),
   ?assertEqual(<<>>, EncodedBody).
 
 encode_alpha_num4_test() ->
