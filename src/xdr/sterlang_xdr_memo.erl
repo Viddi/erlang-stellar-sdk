@@ -4,9 +4,16 @@
 
 -export([encode/1]).
 
+-type memo() :: sterlang_memo_none:memo_none()
+  | sterlang_memo_text:memo_text()
+  | sterlang_memo_id:memo_id()
+  | sterlang_memo_hash:memo_hash()
+  | sterlang_memo_return:memo_return().
+
 %%====================================================================
 %% API functions
 %%====================================================================
+-spec encode(memo()) -> binary().
 encode(Memo) ->
   {Type, Body} = make_xdr(Memo),
 
@@ -34,31 +41,6 @@ encode(Memo) ->
   EncodedType = sterlang_xdr_memo_type:encode(Type),
 
   <<EncodedType/binary, EncodedBody/binary>>.
-
-%%  case Memo of
-%%    {_2, _3} ->
-%%      [enc_MemoType(_2),
-%%        case _2 of
-%%          memo_none ->
-%%            [];
-%%          memo_text ->
-%%            begin
-%%              Size = io_list_len(_3),
-%%              if
-%%                Size =< 28 ->
-%%                  [<<Size:32/unsigned>>, _3, encode_align(Size)];
-%%                true ->
-%%                  exit({xdr, limit})
-%%              end
-%%            end;
-%%          memo_id ->
-%%            enc_uint64(_3);
-%%          memo_hash ->
-%%            enc_Hash(_3);
-%%          memo_return ->
-%%            enc_Hash(_3)
-%%        end]
-%%  end.
 
 %% TODO: Finish me
 %%dec_Memo(_1, _2) ->
@@ -99,6 +81,7 @@ encode(Memo) ->
 %%====================================================================
 %% Internal functions
 %%====================================================================
+-spec make_xdr(memo()) -> {atom(), any()}.
 make_xdr(memo_none) ->
   {memo_none, {}};
 make_xdr({memo_text, _} = Memo) ->
@@ -114,6 +97,7 @@ make_xdr({memo_return, _} = Memo) ->
   Hash = sterlang_memo_return:hash(Memo),
   {memo_return, Hash}.
 
+-spec encode_align(non_neg_integer()) -> binary().
 encode_align(Len) ->
   case Len rem 4 of
     0 -> <<>>;

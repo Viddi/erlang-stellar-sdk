@@ -20,4 +20,4 @@ id(#memo_id{id = Id}) ->
 
 -spec to_xdr(memo_id()) -> binary().
 to_xdr(#memo_id{} = Memo) ->
-  sterlang_xdr_memo_type:encode(Memo).
+  sterlang_xdr_memo:encode(Memo).
