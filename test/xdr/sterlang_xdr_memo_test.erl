@@ -48,7 +48,29 @@ encode_memo_id_test() ->
   ?assertEqual(Id, sterlang_xdr:decode_uint64(EncodedBody)).
 
 encode_memo_hash_test() ->
-  ok.
+  Hash = <<"4142434445464748494a4b4c">>,
+  Memo = sterlang_memo_hash:make_memo(Hash),
+  Encoded = sterlang_xdr_memo:encode(Memo),
+
+  ?assert(is_binary(Encoded)),
+  ?assertEqual(36, byte_size(Encoded)),
+
+  <<EncodedType:4/binary, EncodedBody/binary>> = Encoded,
+
+  ?assertEqual(sterlang_xdr_memo_type:encode(memo_hash), EncodedType),
+  ?assertEqual(32, byte_size(EncodedBody)),
+  ?assertEqual(<<Hash/binary, 0, 0, 0, 0, 0, 0, 0, 0>>, EncodedBody).
 
 encode_memo_return_test() ->
-  ok.
+  Hash = <<"4142434445464748494a4b4c">>,
+  Memo = sterlang_memo_return:make_memo(Hash),
+  Encoded = sterlang_xdr_memo:encode(Memo),
+
+  ?assert(is_binary(Encoded)),
+  ?assertEqual(36, byte_size(Encoded)),
+
+  <<EncodedType:4/binary, EncodedBody/binary>> = Encoded,
+
+  ?assertEqual(sterlang_xdr_memo_type:encode(memo_return), EncodedType),
+  ?assertEqual(32, byte_size(EncodedBody)),
+  ?assertEqual(<<Hash/binary, 0, 0, 0, 0, 0, 0, 0, 0>>, EncodedBody).
