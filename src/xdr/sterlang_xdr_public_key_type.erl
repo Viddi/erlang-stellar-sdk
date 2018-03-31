@@ -4,14 +4,11 @@
 
 -export([encode/1]).
 
--spec encode(atom()) -> binary().
-encode(Type) ->
-  case Type of
-    public_key_type_ed25519 ->
-      <<0:32>>;
-    _ ->
-      throw(invalid_type)
-  end.
+-spec encode(atom()) -> <<_:_*32>>.
+encode(public_key_type_ed25519) ->
+  <<0:32>>;
+encode(_) ->
+  throw(invalid_public_key_type).
 
 %% TODO: Finish me
 %%-spec decode_public_key_type(binary(), non_neg_integer()) -> tuple().

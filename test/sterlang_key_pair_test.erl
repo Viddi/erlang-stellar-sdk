@@ -11,7 +11,8 @@ secret_test() ->
   ?assertMatch(<<"S", _/binary>>, Secret).
 
 private_key_test() ->
-  Bytes = crypto:strong_rand_bytes(32),
+  Bytes = <<62, 203, 88, 243, 73, 97, 157, 53, 140, 46, 49, 178, 246, 147, 121, 184, 245, 137, 85,
+    16, 37, 219, 59, 241, 169, 118, 91, 114, 230, 187, 92, 18>>,
   KeyPair = sterlang_key_pair:from_bytes(Bytes),
   PrivateKey = sterlang_key_pair:private_key(KeyPair),
 
@@ -20,7 +21,7 @@ private_key_test() ->
   ?assertEqual(PrivateKey, Bytes).
 
 public_key_test() ->
-  Secret = sterlang_key_pair:secret(sterlang_key_pair:random()),
+  Secret = <<"SCDJ5HX5HFSIPIDYRAHEA7ZXBF2QE2SSRFRPC5IBYOIPRCNB2FANBWIT">>,
   KeyPair = sterlang_key_pair:from_secret(Secret),
   PublicKey = sterlang_key_pair:public_key(KeyPair),
 
@@ -31,7 +32,7 @@ public_key_test() ->
   ?assertMatch(<<"G", _/binary>>, PublicKey).
 
 key_equality_test() ->
-  KeyPair = sterlang_key_pair:random(),
+  KeyPair = sterlang_key_pair:from_secret(secret()),
 
   Secret = sterlang_key_pair:secret(KeyPair),
   PublicKey = sterlang_key_pair:public_key(KeyPair),
