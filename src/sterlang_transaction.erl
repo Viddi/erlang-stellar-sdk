@@ -1,5 +1,7 @@
 -module(sterlang_transaction).
 
+-export([make_transaction/4, source_account/1, time_bounds/1, memo/1, operations/1, fee/1]).
+
 -define(BASE_FEE, 100).
 
 -record(transaction, {source_account = undefined :: source_account(),
@@ -36,3 +38,23 @@ make_transaction(Source, TimeBounds, Memo, Operations) ->
   sterlang_account:increment_sequence_number(Source),
 
   Transaction.
+
+-spec source_account(transaction()) -> source_account().
+source_account(#transaction{source_account = Source}) ->
+  Source.
+
+-spec time_bounds(transaction()) -> time_bounds().
+time_bounds(#transaction{time_bounds = TimeBounds}) ->
+  TimeBounds.
+
+-spec memo(transaction()) -> memo().
+memo(#transaction{memo = Memo}) ->
+  Memo.
+
+-spec operations(transaction()) -> operations().
+operations(#transaction{operations = Operations}) ->
+  Operations.
+
+-spec fee(transaction()) -> non_neg_integer().
+fee(#transaction{fee = Fee}) ->
+  Fee.
