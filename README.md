@@ -25,13 +25,10 @@ PublicKey = sterlang_key_pair:public_key(KeyPair).
 ### TODO
 
 - [X] Add CI.
-- [X] Add `spec`s for all functions.
-- [X] Add documentation for all functions.
-- [X] Add tests.
 - [X] Add HTTP response records.
 - [ ] Send/Receive payments.
 - [ ] Better Elixir interop.
 
 ## Donations
 
-XLM: GB6YPGW5JFMMP2QB2USQ33EUWTXVL4ZT5ITUNCY3YKVWOJPP57CANOF3
+XLM: GBS7NXADHWHFDOB74EL4NVV3KWTZGBPCLBBX54NJ5CCY6OMJCUMOJ5VS
